@@ -20,7 +20,7 @@ function Header(args) {
             </Col>
 
             <Col>
-              <Button color="primary">Click Me</Button>
+              <Button className="feedback">Give Feedback</Button>
             </Col>
           </Row>
         </Container>
