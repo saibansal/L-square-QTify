@@ -34,7 +34,7 @@ function TopAlbum() {
   }, []);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
     centerPadding: "60px",

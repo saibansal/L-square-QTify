@@ -34,8 +34,8 @@ function NewAlbum() {
   }, []);
 
   const settings = {
-    dots: true,
-    infinite: false,
+    dots: false,
+    infinite: true,
     speed: 500,
     centerPadding: "60px",
     lazyLoad: true,
@@ -67,7 +67,7 @@ function NewAlbum() {
     <div className="top-albums">
       <h2 className="sectionHeading">
         New Albums{" "}
-        <a 
+        <a href="#!"
           onClick={(e) => {
             e.preventDefault();
             setShowAll(!showAll);
