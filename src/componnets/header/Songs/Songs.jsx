@@ -3,9 +3,9 @@ import axios from "axios";
 import Slider from "react-slick";
 import "./songs.scss";
 import { Badge, Card, CardBody, CardTitle } from "reactstrap";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { SONGS_URL } from "../../../config";
 
 function SongsList() {
   const [songs, setSongs] = useState([]);
@@ -13,7 +13,7 @@ function SongsList() {
 
   useEffect(() => {
     axios
-      .get("https://qtify-backend-labs.crio.do/songs")
+      .get(SONGS_URL)
       .then((res) => setSongs(res.data))
       .catch((err) => console.error("Error fetching songs:", err));
   }, []);
@@ -57,37 +57,27 @@ function SongsList() {
   };
 
   return (
-    <div className="top-albums">
+    <div className="songs-list">
       <h2 className="sectionHeading">Songs</h2>
 
       {/* Filter Buttons */}
       <div className="filter-buttons">
-        {categories.map((cat) =>
-          cat === "All" ? (
-            <button
-              key="all"
-              className={filter === "All" ? "active" : ""}
-              onClick={() => setFilter("All")}
-            >
-              All
-            </button>
-          ) : (
-            <button
-              key={cat.key}
-              className={filter === cat.key ? "active" : ""}
-              onClick={() => setFilter(cat.key)}
-            >
-              {cat.label}
-            </button>
-          )
-        )}
+        {categories.map((cat) => (
+          <button
+            key={cat === "All" ? "all" : cat.key}
+            className={filter === (cat === "All" ? "All" : cat.key) ? "active" : ""}
+            onClick={() => setFilter(cat === "All" ? "All" : cat.key)}
+          >
+            {cat === "All" ? "All" : cat.label}
+          </button>
+        ))}
       </div>
 
       {/* Songs Slider */}
       <div className="slider-container">
         <Slider {...settings}>
           {filteredSongs.map((song) => (
-            <div key={song._id} className="cardParent">
+            <div key={song.id} className="cardParent">
               <Card>
                 <div className="infoContainer">
                   <img src={song.image} alt={song.title} />

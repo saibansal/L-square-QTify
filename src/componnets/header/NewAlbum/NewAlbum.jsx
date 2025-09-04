@@ -4,6 +4,7 @@ import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./album.scss";
+import  {NEW_url} from "../../../config";
 import {
   Card,
   CardBody, 
@@ -24,7 +25,7 @@ function NewAlbum() {
 
   useEffect(() => {
     axios
-      .get("https://qtify-backend-labs.crio.do/albums/top")
+      .get(NEW_url)
       .then((res) => {
         setAlbums(res.data);
       })

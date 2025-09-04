@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {TOP_ALBUM_URL} from "../../../config";
 import "./album.scss";
 import {
   Card,
@@ -14,23 +15,23 @@ import {
 function TopAlbum() {
   const [nav1, setNav1] = useState(null);
   const sliderRef1 = useRef(null);
-
   const [albums, setAlbums] = useState([]);
-  const [showAll, setShowAll] = useState(false); // 👈 toggle state
-
+  const [showAll, setShowAll] = useState(false); 
+  
   useEffect(() => {
     setNav1(sliderRef1.current);
   }, []);
 
   useEffect(() => {
-    axios
-      .get("https://qtify-backend-labs.crio.do/albums/top")
-      .then((res) => {
+    const fetchAlbums = async () => {
+      try {
+        const res = await axios.get(TOP_ALBUM_URL);
         setAlbums(res.data);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Error fetching albums:", err);
-      });
+      }
+    };
+    fetchAlbums();
   }, []);
 
   const settings = {
