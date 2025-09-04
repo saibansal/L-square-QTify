@@ -6,13 +6,20 @@ import "slick-carousel/slick/slick-theme.css";
 import { TOP_ALBUM_URL } from "../../../config";
 import "./album.scss";
 
-import { Card, CardBody, CardTitle, Badge } from "reactstrap";
+import { Card, CardBody, Tooltip, CardTitle, Badge } from "reactstrap";
 
 function TopAlbum() {
   const [nav1, setNav1] = useState(null);
   const sliderRef1 = useRef(null);
   const [albums, setAlbums] = useState([]);
   const [showAll, setShowAll] = useState(false);
+
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [openTooltipId, setOpenTooltipId] = useState(null);
+
+  const toggle = (id) => {
+    setOpenTooltipId(openTooltipId === id ? null : id);
+  };
 
   useEffect(() => {
     setNav1(sliderRef1.current);
@@ -77,10 +84,19 @@ function TopAlbum() {
       {showAll ? (
         <div class="row row-cols-1 row-cols-md-6 g-4 slider-container">
           {albums.map((album) => (
-            <div class="col">
-              <Card key={album.id}>
-                <div className="infoContainer">
-                   <span className="songLength"> {album.songs.length} Songs </span>
+            <div className="col" key={album.id}>
+              <Card>
+                <div
+                  className="infoContainer"
+                  id={`TooltipExample-${album.id}`}
+                >
+                  <Tooltip
+                    isOpen={openTooltipId === album.id}
+                    target={`TooltipExample-${album.id}`}
+                    toggle={() => toggle(album.id)}
+                  >
+                    Total Songs: {album.songs.length}
+                  </Tooltip>
                   <img alt={album.title} src={album.image} />
                   <CardBody>
                     <Badge color="dark" className="followBadge" pill>
@@ -99,8 +115,18 @@ function TopAlbum() {
             {albums.map((album) => (
               <div key={album.id} className="cardParent">
                 <Card>
-                  <div className="infoContainer">
-                     <span className="songLength"> {album.songs.length} Songs </span>
+                  <div className="infoContainer" id={`TooltipExample-${album.id}`}>
+                    <Tooltip
+                    isOpen={openTooltipId === album.id}
+                    target={`TooltipExample-${album.id}`}
+                    toggle={() => toggle(album.id)}
+                  >
+                    Total Songs: {album.songs.length}
+                  </Tooltip>
+                    <span className="songLength">
+                      {" "}
+                      {album.songs.length} Songs{" "}
+                    </span>
                     <img alt={album.title} src={album.image} />
                     <CardBody>
                       <Badge color="dark" className="followBadge" pill>
