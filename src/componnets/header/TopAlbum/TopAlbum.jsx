@@ -13,10 +13,7 @@ function TopAlbum() {
   const sliderRef1 = useRef(null);
   const [albums, setAlbums] = useState([]);
   const [showAll, setShowAll] = useState(false);
-
-  
   const [openTooltipId, setOpenTooltipId] = useState(null);
-
   const toggle = (id) => {
     setOpenTooltipId(openTooltipId === id ? null : id);
   };
