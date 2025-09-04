@@ -1,4 +1,28 @@
 main.main {
   float: left;
   width: 100%;
+  .top-albums {
+    padding: 5rem 0;
+    float: left;
+    width: 100%;
+    .sectionHeading {
+      display: flex;
+      justify-content: space-between;
+      color: #fff;
+      font-family: Poppins;
+      font-weight: 600;
+      font-style: SemiBold;
+      font-size: 20px;
+      a {
+        font-family: Poppins;
+        font-weight: 600;
+        font-size: 20px;
+        color: #34C94B;
+        text-decoration: none;
+        &:hover{
+          color: #fff;
+        }
+      }
+    }
+  }
 }

@@ -3,19 +3,30 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./album.scss";
+import { Card, CardBody, CardTitle, Badge } from "reactstrap";
 
 function AlbumCard() {
   const [nav1, setNav1] = useState(null);
   let sliderRef1 = useRef(null);
 
+  const [albums, setAlbums] = useState([]);
+
   useEffect(() => {
     setNav1(sliderRef1);
+  }, []);
+
+  useEffect(() => {
+    fetch("https://qtify-backend-labs.crio.do/albums/top")
+      .then((res) => res.json())
+      .then((data) => setAlbums(data))
+      .catch((err) => console.error("Error fetching albums:", err));
   }, []);
 
   var settings = {
     dots: true,
     infinite: false,
     speed: 500,
+    centerPadding: "60px",
     lazyLoad: true,
     slidesToShow: 7,
     slidesToScroll: 1,
@@ -55,51 +66,21 @@ function AlbumCard() {
         asNavFor={nav1}
         ref={(slider) => (sliderRef1 = slider)}
       >
-        <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
-        <div>
-          <h3>7</h3>
-        </div>
-        <div>
-          <h3>8</h3>
-        </div>
-        <div>
-          <h3>9</h3>
-        </div>
-        <div>
-          <h3>10</h3>
-        </div>
-        <div>
-          <h3>11</h3>
-        </div>
-        <div>
-          <h3>12</h3>
-        </div>
-        <div>
-          <h3>13</h3>
-        </div>
-        <div>
-          <h3>14</h3>
-        </div>
-        <div>
-          <h3>15</h3>
-        </div>
+        {albums.map((album) => (
+          <div key={album.id} className="cardParent">
+            <Card>
+              <div className="infoContainer">
+                <img alt={album.title} src={album.image} />
+                <CardBody>
+                  <Badge color="dark" className="followBadge" pill>
+                    {album.follows} Follows
+                  </Badge>
+                </CardBody>
+              </div>
+              <CardTitle tag="h5">{album.title}</CardTitle>
+            </Card>
+          </div>
+        ))}
       </Slider>
     </div>
   );
