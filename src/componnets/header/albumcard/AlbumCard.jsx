@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
+import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./album.scss";
@@ -7,22 +8,26 @@ import { Card, CardBody, CardTitle, Badge } from "reactstrap";
 
 function AlbumCard() {
   const [nav1, setNav1] = useState(null);
-  let sliderRef1 = useRef(null);
+  const sliderRef1 = useRef(null);
 
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    setNav1(sliderRef1);
+    setNav1(sliderRef1.current);
   }, []);
 
   useEffect(() => {
-    fetch("https://qtify-backend-labs.crio.do/albums/top")
-      .then((res) => res.json())
-      .then((data) => setAlbums(data))
-      .catch((err) => console.error("Error fetching albums:", err));
+    axios
+      .get("https://qtify-backend-labs.crio.do/albums/top")
+      .then((res) => {
+        setAlbums(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching albums:", err);
+      });
   }, []);
 
-  var settings = {
+  const settings = {
     dots: true,
     infinite: false,
     speed: 500,
@@ -59,13 +64,10 @@ function AlbumCard() {
       },
     ],
   };
+
   return (
     <div className="slider-container">
-      <Slider
-        {...settings}
-        asNavFor={nav1}
-        ref={(slider) => (sliderRef1 = slider)}
-      >
+      <Slider {...settings} asNavFor={nav1} ref={sliderRef1}>
         {albums.map((album) => (
           <div key={album.id} className="cardParent">
             <Card>
