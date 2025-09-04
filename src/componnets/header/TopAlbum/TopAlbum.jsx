@@ -14,7 +14,7 @@ function TopAlbum() {
   const [albums, setAlbums] = useState([]);
   const [showAll, setShowAll] = useState(false);
 
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  
   const [openTooltipId, setOpenTooltipId] = useState(null);
 
   const toggle = (id) => {

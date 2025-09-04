@@ -7,7 +7,7 @@ import "./album.scss";
 import  {NEW_url} from "../../../config";
 import {
   Card,
-  CardBody, 
+  CardBody, Tooltip,
   CardTitle,
   Badge,
 } from "reactstrap";
@@ -18,6 +18,14 @@ function NewAlbum() {
 
   const [albums, setAlbums] = useState([]);
   const [showAll, setShowAll] = useState(false); // 👈 toggle state
+
+
+   
+    const [openTooltipId, setOpenTooltipId] = useState(null);
+  
+    const toggle = (id) => {
+      setOpenTooltipId(openTooltipId === id ? null : id);
+    };
 
   useEffect(() => {
     setNav1(sliderRef1.current);
@@ -83,7 +91,14 @@ function NewAlbum() {
           {albums.map((album) => (
             <div class="col">
               <Card key={album.id}>
-                <div className="infoContainer">
+                <div className="infoContainer" id={`TooltipExample-${album.id}`}>
+                    <Tooltip
+                    isOpen={openTooltipId === album.id}
+                    target={`TooltipExample-${album.id}`}
+                    toggle={() => toggle(album.id)}
+                  >
+                    Total Songs: {album.songs.length}
+                  </Tooltip>
                   <span className="songLength"> {album.songs.length} Songs </span>
                   <img alt={album.title} src={album.image} />
                   <CardBody>
@@ -103,8 +118,14 @@ function NewAlbum() {
             {albums.map((album) => (
               <div key={album.id} className="cardParent">
                 <Card>
-                  <div className="infoContainer">
-                    <span className="songLength"> {album.songs.length} Songs </span>
+                  <div className="infoContainer" id={`TooltipExample-${album.id}`}>
+                    <Tooltip
+                    isOpen={openTooltipId === album.id}
+                    target={`TooltipExample-${album.id}`}
+                    toggle={() => toggle(album.id)}
+                  >
+                    Total Songs: {album.songs.length}
+                  </Tooltip>
                     <img alt={album.title} src={album.image} />
                     <CardBody>
                       <Badge color="dark" className="followBadge" pill>
