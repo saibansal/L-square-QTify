@@ -84,6 +84,7 @@ function NewAlbum() {
             <div class="col">
               <Card key={album.id}>
                 <div className="infoContainer">
+                  <span className="songLength"> {album.songs.length} Songs </span>
                   <img alt={album.title} src={album.image} />
                   <CardBody>
                     <Badge color="dark" className="followBadge" pill>
@@ -103,6 +104,7 @@ function NewAlbum() {
               <div key={album.id} className="cardParent">
                 <Card>
                   <div className="infoContainer">
+                    <span className="songLength"> {album.songs.length} Songs </span>
                     <img alt={album.title} src={album.image} />
                     <CardBody>
                       <Badge color="dark" className="followBadge" pill>

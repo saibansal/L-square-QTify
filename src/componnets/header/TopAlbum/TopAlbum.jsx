@@ -3,21 +3,17 @@ import Slider from "react-slick";
 import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {TOP_ALBUM_URL} from "../../../config";
+import { TOP_ALBUM_URL } from "../../../config";
 import "./album.scss";
-import {
-  Card,
-  CardBody, 
-  CardTitle,
-  Badge,
-} from "reactstrap";
+
+import { Card, CardBody, CardTitle, Badge } from "reactstrap";
 
 function TopAlbum() {
   const [nav1, setNav1] = useState(null);
   const sliderRef1 = useRef(null);
   const [albums, setAlbums] = useState([]);
-  const [showAll, setShowAll] = useState(false); 
-  
+  const [showAll, setShowAll] = useState(false);
+
   useEffect(() => {
     setNav1(sliderRef1.current);
   }, []);
@@ -68,7 +64,7 @@ function TopAlbum() {
     <div className="top-albums">
       <h2 className="sectionHeading">
         Top Albums{" "}
-        <a 
+        <a
           onClick={(e) => {
             e.preventDefault();
             setShowAll(!showAll);
@@ -84,6 +80,7 @@ function TopAlbum() {
             <div class="col">
               <Card key={album.id}>
                 <div className="infoContainer">
+                   <span className="songLength"> {album.songs.length} Songs </span>
                   <img alt={album.title} src={album.image} />
                   <CardBody>
                     <Badge color="dark" className="followBadge" pill>
@@ -103,6 +100,7 @@ function TopAlbum() {
               <div key={album.id} className="cardParent">
                 <Card>
                   <div className="infoContainer">
+                     <span className="songLength"> {album.songs.length} Songs </span>
                     <img alt={album.title} src={album.image} />
                     <CardBody>
                       <Badge color="dark" className="followBadge" pill>

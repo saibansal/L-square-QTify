@@ -7,6 +7,7 @@ import NewAlbum from "../componnets/header/NewAlbum/NewAlbum";
 import TopAlbum from "../componnets/header/TopAlbum/TopAlbum";
 import SongsList from "../componnets/header/Songs/Songs";
 import HomeFaq from "../componnets/faq/Faq";
+import { Container } from "reactstrap";
 
 function Home() {
   return (
@@ -14,12 +15,12 @@ function Home() {
       <Header />
 
       <main className="main" style={{ backgroundColor: "#121212" }}>
-      
+      <Container>
           <TopAlbum />
           <NewAlbum />
           <SongsList />
           <HomeFaq />
-      
+      </Container>
       </main>
     </>
   );

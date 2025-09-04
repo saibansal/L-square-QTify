@@ -80,6 +80,7 @@ function SongsList() {
             <div key={song.id} className="cardParent">
               <Card>
                 <div className="infoContainer">
+                    
                   <img src={song.image} alt={song.title} />
                   <CardBody>
                     <Badge color="dark" className="followBadge" pill>
