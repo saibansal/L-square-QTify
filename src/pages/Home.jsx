@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../componnets/header/Header";
-import { Container } from "reactstrap";
+// import { Container } from "reactstrap";
 
 import "./home.scss";
 import NewAlbum from "../componnets/header/NewAlbum/NewAlbum";
@@ -14,12 +14,12 @@ function Home() {
       <Header />
 
       <main className="main" style={{ backgroundColor: "#121212" }}>
-        <Container>
+      
           <TopAlbum />
           <NewAlbum />
           <SongsList />
           <HomeFaq />
-        </Container>
+      
       </main>
     </>
   );
