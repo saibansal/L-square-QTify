@@ -120,10 +120,7 @@ function TopAlbum() {
                   >
                     Total Songs: {album.songs.length}
                   </Tooltip>
-                    <span className="songLength">
-                      {" "}
-                      {album.songs.length} Songs{" "}
-                    </span>
+                    
                     <img alt={album.title} src={album.image} />
                     <CardBody>
                       <Badge color="dark" className="followBadge" pill>
