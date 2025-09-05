@@ -59,7 +59,7 @@ function SongsList() {
   };
 
   return (
-    <div className="songs-list">
+    <div className="songs-list top-albums">
       <h2 className="sectionHeading">Songs</h2>
 
       {/* Filter Buttons */}
