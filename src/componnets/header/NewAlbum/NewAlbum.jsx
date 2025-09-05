@@ -4,7 +4,7 @@ import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./album.scss";
-import  {NEW_url} from "../../../config";
+import  {BACKEND_ENPOINT} from "../../../config";
 import {
   Card,
   CardBody, Tooltip,
@@ -33,7 +33,7 @@ function NewAlbum() {
 
   useEffect(() => {
     axios
-      .get(NEW_url)
+      .get(`${BACKEND_ENPOINT}/albums/new`)
       .then((res) => {
         setAlbums(res.data);
       })
@@ -48,7 +48,7 @@ function NewAlbum() {
     speed: 500,
     centerPadding: "60px",
     lazyLoad: true,
-    slidesToShow: 7,
+    slidesToShow: 9,
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [

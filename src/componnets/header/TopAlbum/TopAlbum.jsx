@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { TOP_ALBUM_URL } from "../../../config";
+import { BACKEND_ENPOINT } from "../../../config";
 import "./album.scss";
 
 import { Card, CardBody, Tooltip, CardTitle, Badge } from "reactstrap";
@@ -25,7 +25,7 @@ function TopAlbum() {
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
-        const res = await axios.get(TOP_ALBUM_URL);
+        const res = await axios.get(`${BACKEND_ENPOINT}/albums/top`);
         setAlbums(res.data);
       } catch (err) {
         console.error("Error fetching albums:", err);
@@ -40,7 +40,7 @@ function TopAlbum() {
     speed: 500,
     centerPadding: "60px",
     lazyLoad: true,
-    slidesToShow: 7,
+    slidesToShow: 9,
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [

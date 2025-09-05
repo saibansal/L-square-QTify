@@ -5,15 +5,17 @@ import "./songs.scss";
 import { Badge, Card, CardBody, CardTitle } from "reactstrap";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { SONGS_URL } from "../../../config";
+import { BACKEND_ENPOINT } from "../../../config";
 
 function SongsList() {
   const [songs, setSongs] = useState([]);
   const [filter, setFilter] = useState("All");
 
+
+  
   useEffect(() => {
     axios
-      .get(SONGS_URL)
+      .get(`${BACKEND_ENPOINT}/songs`)
       .then((res) => setSongs(res.data))
       .catch((err) => console.error("Error fetching songs:", err));
   }, []);
@@ -37,7 +39,7 @@ function SongsList() {
     speed: 500,
     centerPadding: "60px",
     lazyLoad: true,
-    slidesToShow: 7,
+    slidesToShow: 9,
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
