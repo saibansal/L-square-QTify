@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_ENPOINT } from "../../../config";
+import { useNavigate } from "react-router-dom";
 
 function Search() {
   const [albums, setAlbums] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
+  // 🔹 Fetch albums on load
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
-        const res = await axios.get(`${BACKEND_ENPOINT}/songs`);
+        const res = await axios.get(`${BACKEND_ENPOINT}/albums/new`);
         setAlbums(res.data);
       } catch (err) {
-        console.error("Error fetching albums:", err); 
+        console.error("Error fetching albums:", err);
       }
     };
     fetchAlbums();
   }, []);
 
-  // 🔎 Handle search input (only by title)
+  // 🔎 Handle search input (title or description)
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setQuery(value);
@@ -28,16 +31,28 @@ function Search() {
       setFiltered([]);
     } else {
       const results = albums.filter(
-        (album) => album.title && album.title.toLowerCase().includes(value)
+        (album) =>
+          (album.title && album.title.toLowerCase().includes(value)) ||
+          (album.description &&
+            album.description.toLowerCase().includes(value))
       );
       setFiltered(results);
     }
   };
 
-  // Select from dropdown
+  // 👉 Redirect when selecting from dropdown
   const handleSelect = (album) => {
-    setQuery(album.title);
+    setQuery("");
     setFiltered([]);
+    navigate(`/songssearch?q=${encodeURIComponent(album.title)}`);
+  };
+
+  // 👉 Press Enter should redirect too
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && query.trim().length >= 3) {
+      navigate(`/songssearch?q=${encodeURIComponent(query)}`);
+      setFiltered([]);
+    }
   };
 
   return (
@@ -52,6 +67,7 @@ function Search() {
         className="search-bar form-control"
         value={query}
         onChange={handleSearch}
+        onKeyDown={handleKeyDown}
       />
 
       {/* Dropdown results */}

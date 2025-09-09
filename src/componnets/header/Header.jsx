@@ -3,10 +3,11 @@ import SiteLogo from "./SiteLogo";
 import "../header/header.scss";
 import Hero from "./Hero/Hero";
 import { Row, Col } from "reactstrap";
-import {Button, Container} from "reactstrap";
+import { Button, Container } from "reactstrap";
 import SiteSearch from "./Search/Search";
-
+import { useLocation } from "react-router-dom";
 function Header(args) {
+  const location = useLocation();
   return (
     <>
       <header>
@@ -26,7 +27,7 @@ function Header(args) {
         </Container>
       </header>
 
-      <Hero />
+      {location.pathname === "/" && <Hero />}
     </>
   );
 }
