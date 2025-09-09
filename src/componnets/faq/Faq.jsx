@@ -1,55 +1,55 @@
-import React, { useState } from 'react';
-import {Accordion,
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { BACKEND_ENPOINT } from "../../config";
+import "./faq.scss";
+import {
+  Accordion,
   AccordionBody,
   AccordionHeader,
   AccordionItem,
-} from 'reactstrap';
+} from "reactstrap";
 
-function HomeFaq(props) {
-  const [open, setOpen] = useState('1');
+function HomeFaq() {
+  const [faqQA, setFaqQA] = useState([]);
+  const [open, setOpen] = useState("");
+
   const toggle = (id) => {
     if (open === id) {
-      setOpen();
+      setOpen("");
     } else {
       setOpen(id);
     }
   };
 
-  return (
-    <div className='faq'>
-        <h2 className='heading'> FAQs</h2>
+  useEffect(() => {
+    const fetchFaq = async () => {
+      try {
+        const res = await axios.get(`${BACKEND_ENPOINT}/faq`);
+        console.log("FAQ API Response:", res.data);
+        setFaqQA(Array.isArray(res.data) ? res.data : res.data.data || []);
+      } catch (err) {
+        console.error("Error fetching FAQs:", err);
+        setFaqQA([]); // fallback
+      }
+    };
+    fetchFaq();
+  }, []);
 
-      <Accordion open={open} toggle={toggle}>
-        <AccordionItem>
-          <AccordionHeader targetId="1">Accordion Item 1</AccordionHeader>
-          <AccordionBody accordionId="1">
-            <strong>This is the first item&#39;s accordion body.</strong>
-            You can modify any of this with custom CSS or overriding our default
-            variables. It&#39;s also worth noting that just about any HTML can
-            go within the <code>.accordion-body</code>, though the transition
-            does limit overflow.
-          </AccordionBody>
-        </AccordionItem>
-        <AccordionItem>
-          <AccordionHeader targetId="2">Accordion Item 2</AccordionHeader>
-          <AccordionBody accordionId="2">
-            <strong>This is the second item&#39;s accordion body.</strong>
-            You can modify any of this with custom CSS or overriding our default
-            variables. It&#39;s also worth noting that just about any HTML can
-            go within the <code>.accordion-body</code>, though the transition
-            does limit overflow.
-          </AccordionBody>
-        </AccordionItem>
-        <AccordionItem>
-          <AccordionHeader targetId="3">Accordion Item 3</AccordionHeader>
-          <AccordionBody accordionId="3">
-            <strong>This is the third item&#39;s accordion body.</strong>
-            You can modify any of this with custom CSS or overriding our default
-            variables. It&#39;s also worth noting that just about any HTML can
-            go within the <code>.accordion-body</code>, though the transition
-            does limit overflow.
-          </AccordionBody>
-        </AccordionItem>
+  return (
+    <div className="faq">
+      <h2 className="heading">FAQs</h2>
+
+      <Accordion open={open} toggle={toggle} className="faq-section">
+        {Array.isArray(faqQA) &&
+          faqQA.map((faq, index) => {
+            const id = String(index + 1);
+            return (
+              <AccordionItem key={id}>
+                <AccordionHeader targetId={id}>{faq.question}</AccordionHeader>
+                <AccordionBody accordionId={id}>{faq.answer}</AccordionBody>
+              </AccordionItem>
+            );
+          })}
       </Accordion>
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BACKEND_ENPOINT } from "../../../config";
+import { BACKEND_ENPOINT } from "../config";
 
-function Search() {
+function AllSongsList() {
   const [albums, setAlbums] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [query, setQuery] = useState("");
@@ -19,32 +19,37 @@ function Search() {
     fetchAlbums();
   }, []);
 
-  // 🔎 Handle search input (only by title)
+  // 🔎 Handle search input
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setQuery(value);
 
-    if (value.trim().length < 3) {
-      setFiltered([]);
+    if (value.trim().length < 4) {
+      setFiltered([]); // hide dropdown until 4 letters
     } else {
-      const results = albums.filter(
-        (album) => album.title && album.title.toLowerCase().includes(value)
-      );
+      const results = albums.filter((album) => {
+        const titleMatch = album.title.toLowerCase().includes(value);
+        const artistMatch = album.artists
+          .join(" ")
+          .toLowerCase()
+          .includes(value);
+        return titleMatch || artistMatch;
+      });
+
       setFiltered(results);
     }
   };
 
   // Select from dropdown
   const handleSelect = (album) => {
-    setQuery(album.title);
-    setFiltered([]);
+    setQuery(album.title); // fill input with song title
+    setFiltered([]); // close dropdown
   };
 
   return (
-    <div
-      className="top-albums"
-      style={{ position: "relative", maxWidth: "500px", margin: "0 auto" }}
-    >
+    <div className="top-albums" style={{ position: "relative", maxWidth: "500px", margin: "0 auto" }}>
+      <h2 className="sectionHeading">Songs List</h2>
+
       {/* Search bar */}
       <input
         type="text"
@@ -54,8 +59,8 @@ function Search() {
         onChange={handleSearch}
       />
 
-      {/* Dropdown results */}
-      {query.length >= 3 && filtered.length > 0 && (
+      {/* Dropdown results (only if query >= 4 letters) */}
+      {query.length >= 4 && filtered.length > 0 && (
         <ul
           className="dropdown-results list-group"
           style={{
@@ -73,23 +78,24 @@ function Search() {
           {filtered.map((album) => (
             <li
               key={album.id}
-              className="list-group-item list-group-item-action text-left"
+              className="list-group-item list-group-item-action"
               style={{ cursor: "pointer" }}
               onClick={() => handleSelect(album)}
             >
               <strong>{album.title}</strong>
               <br />
-              <small>
-                {Array.isArray(album.artists)
-                  ? album.artists.join(", ")
-                  : "Unknown Artist"}
-              </small>
+              <small>{album.artists.join(", ")}</small>
             </li>
           ))}
         </ul>
+      )}
+
+      {/* No results */}
+      {query.length >= 4 && filtered.length === 0 && (
+        <p style={{ marginTop: "10px" }}>No results found.</p>
       )}
     </div>
   );
 }
 
-export default Search;
+export default AllSongsList;
