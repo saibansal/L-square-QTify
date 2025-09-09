@@ -13,7 +13,7 @@ function Search() {
         const res = await axios.get(`${BACKEND_ENPOINT}/songs`);
         setAlbums(res.data);
       } catch (err) {
-        console.error("Error fetching albums:", err);
+        console.error("Error fetching albums:", err); 
       }
     };
     fetchAlbums();
