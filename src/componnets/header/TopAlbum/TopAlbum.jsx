@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -116,7 +117,9 @@ function TopAlbum() {
                     </Badge>
                   </CardBody>
                 </div>
-                <CardTitle tag="h5">{album.title}</CardTitle>
+                <CardTitle tag="h5">
+                  <Link to={`/song-detail/${album.id}`} className="text-decoration-none text-white">{album.title}</Link>
+                </CardTitle>
               </Card>
             </SwiperSlide>
           ))}

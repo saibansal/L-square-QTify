@@ -1,0 +1,53 @@
+.album-detail-section {
+  .product-image {
+    max-height: 400px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .song-details {
+    color: white;
+    padding-left: 50px;
+    ul {
+      padding-left: 20px;
+      width: 100%;
+      float: left;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 20px;
+      li {
+        float: left;
+        padding: 0 20px;
+        list-style: inside;
+        &:first-child {
+          padding-left: 0;
+        }
+      }
+    }
+  }
+  table {
+    tr {
+      th{
+        text-transform: uppercase;
+        padding-bottom: 10px;
+      }
+      th,
+      td {
+        color: white;
+        font-weight: normal;
+        padding: 7px 10px;
+      }
+      td {
+        
+        .song-thumb {
+          width: 40px;
+          height: 40px;
+          border-radius: 4px;
+          object-fit: cover;
+        }
+      }&:hover{
+        background-color: rgba($color: #fff, $alpha: 0.3);
+      }
+    }
+  }
+}

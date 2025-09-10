@@ -25,7 +25,7 @@ function HomeFaq() {
     const fetchFaq = async () => {
       try {
         const res = await axios.get(`${BACKEND_ENPOINT}/faq`);
-        console.log("FAQ API Response:", res.data);
+        // console.log("FAQ API Response:", res.data);
         setFaqQA(Array.isArray(res.data) ? res.data : res.data.data || []);
       } catch (err) {
         console.error("Error fetching FAQs:", err);

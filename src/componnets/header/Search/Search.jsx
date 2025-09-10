@@ -9,25 +9,20 @@ function Search() {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
-  // 🔹 Fetch albums on load
+  // 🔹 Fetch albums list on mount
   useEffect(() => {
-    const fetchAlbums = async () => {
-      try {
-        const res = await axios.get(`${BACKEND_ENPOINT}/albums/new`);
-        setAlbums(res.data);
-      } catch (err) {
-        console.error("Error fetching albums:", err);
-      }
-    };
-    fetchAlbums();
+    axios
+      .get(`${BACKEND_ENPOINT}/albums/top`)
+      .then((res) => setAlbums(res.data))
+      .catch((err) => console.error("Error fetching albums:", err));
   }, []);
 
-  // 🔎 Handle search input (title or description)
+  // 🔎 Handle search input
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setQuery(value);
 
-    if (value.trim().length < 3) {
+    if (value.trim().length < 2) {
       setFiltered([]);
     } else {
       const results = albums.filter(
@@ -40,17 +35,17 @@ function Search() {
     }
   };
 
-  // 👉 Redirect when selecting from dropdown
+  // 👉 When selecting an album from dropdown
   const handleSelect = (album) => {
     setQuery("");
     setFiltered([]);
-    navigate(`/songssearch?q=${encodeURIComponent(album.title)}`);
+    navigate(`/song-detail/${album.id}`); // ✅ Pass album id in URL
   };
 
-  // 👉 Press Enter should redirect too
+  // 👉 When pressing Enter
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && query.trim().length >= 3) {
-      navigate(`/songssearch?q=${encodeURIComponent(query)}`);
+    if (e.key === "Enter" && query.trim().length >= 2) {
+      navigate(`/songs?q=${encodeURIComponent(query)}`); // ✅ Search songs
       setFiltered([]);
     }
   };
@@ -63,7 +58,7 @@ function Search() {
       {/* Search bar */}
       <input
         type="text"
-        placeholder="Search for songs..."
+        placeholder="Search albums or songs..."
         className="search-bar form-control"
         value={query}
         onChange={handleSearch}
@@ -71,7 +66,7 @@ function Search() {
       />
 
       {/* Dropdown results */}
-      {query.length >= 3 && filtered.length > 0 && (
+      {query.length >= 2 && filtered.length > 0 && (
         <ul
           className="dropdown-results list-group"
           style={{
@@ -96,9 +91,9 @@ function Search() {
               <strong>{album.title}</strong>
               <br />
               <small>
-                {Array.isArray(album.artists)
-                  ? album.artists.join(", ")
-                  : "Unknown Artist"}
+                {album.description
+                  ? album.description.slice(0, 40) + "..."
+                  : "No description"}
               </small>
             </li>
           ))}

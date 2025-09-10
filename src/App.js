@@ -1,5 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -12,7 +13,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/songssearch" element={<AllSongsList />} />
+          <Route path="/song-detail/:id" element={<AllSongsList />} />
+
+          
         </Routes>
       </BrowserRouter>
     </div>
