@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_ENPOINT } from "../config";
-import { Container } from "reactstrap";
+import { Container, Badge } from "reactstrap";
 import "./songdetails.scss";
 import Header from "../componnets/header/Header";
 
@@ -96,7 +96,7 @@ function AlbumDetail() {
                 </div>
 
                 <button className="btn btn-success btn-md mb-3 me-2">
-                 <i class="bi bi-shuffle me-2"></i>
+                  <i class="bi bi-shuffle me-2"></i>
                   Shuffle
                 </button>
                 <button className="btn btn-light btn-md mb-3">
@@ -131,13 +131,23 @@ function AlbumDetail() {
                       <td className="text-start">{song.title}</td>
                       <td className="text-start">
                         {song.artists && song.artists.length > 0 ? (
-                          song.artists.map((artist, i) => (
-                            <span key={i} className="badge text-bg-light me-1">
-                              {typeof artist === "string"
-                                ? artist
-                                : artist.label}
-                            </span>
-                          ))
+                          song.artists.map((artist, i) => {
+                            const badgeColors = [
+                              "primary",
+                              "success",
+                              "danger",
+                              "warning",
+                            ];
+                            const color = badgeColors[i % badgeColors.length]; // cycle colors
+
+                            return (
+                              <Badge key={i} className="me-1" color={color}>
+                                {typeof artist === "string"
+                                  ? artist
+                                  : artist.label}
+                              </Badge>
+                            );
+                          })
                         ) : (
                           <span className="badge text-bg-secondary">
                             Unknown
