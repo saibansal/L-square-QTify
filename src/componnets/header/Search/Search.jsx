@@ -9,7 +9,6 @@ function Search() {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
-  // 🔹 Fetch albums list on mount
   useEffect(() => {
     axios
       .get(`${BACKEND_ENPOINT}/albums/top`)
@@ -17,7 +16,6 @@ function Search() {
       .catch((err) => console.error("Error fetching albums:", err));
   }, []);
 
-  // 🔎 Handle search input
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setQuery(value);
@@ -28,24 +26,21 @@ function Search() {
       const results = albums.filter(
         (album) =>
           (album.title && album.title.toLowerCase().includes(value)) ||
-          (album.description &&
-            album.description.toLowerCase().includes(value))
+          (album.description && album.description.toLowerCase().includes(value))
       );
       setFiltered(results);
     }
   };
 
-  // 👉 When selecting an album from dropdown
   const handleSelect = (album) => {
     setQuery("");
     setFiltered([]);
-    navigate(`/song-detail/${album.id}`); // ✅ Pass album id in URL
+    navigate(`/song-detail/${album.id}`);
   };
 
-  // 👉 When pressing Enter
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && query.trim().length >= 2) {
-      navigate(`/songs?q=${encodeURIComponent(query)}`); // ✅ Search songs
+      navigate(`/songs?q=${encodeURIComponent(query)}`);
       setFiltered([]);
     }
   };
@@ -55,7 +50,6 @@ function Search() {
       className="top-albums"
       style={{ position: "relative", maxWidth: "500px", margin: "0 auto" }}
     >
-      {/* Search bar */}
       <input
         type="text"
         placeholder="Search albums or songs..."
@@ -65,7 +59,6 @@ function Search() {
         onKeyDown={handleKeyDown}
       />
 
-      {/* Dropdown results */}
       {query.length >= 2 && filtered.length > 0 && (
         <ul
           className="dropdown-results list-group"

@@ -54,7 +54,6 @@ function TopAlbum() {
       </h2>
 
       {showAll ? (
-        /* === Grid View (Show All) === */
         <div className="row row-cols-1 row-cols-md-6 g-4 slider-container">
           {albums.map((album) => (
             <div className="col" key={album.id}>
@@ -83,10 +82,9 @@ function TopAlbum() {
           ))}
         </div>
       ) : (
-        /* === Swiper Slider View === */
         <Swiper
           className="slider-container"
-          modules={[Navigation]} // ✅ only Navigation
+          modules={[Navigation]}
           spaceBetween={20}
           slidesPerView={9}
           navigation={{ clickable: true }}

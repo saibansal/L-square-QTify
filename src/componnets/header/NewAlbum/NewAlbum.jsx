@@ -80,10 +80,9 @@ function NewAlbum() {
           ))}
         </div>
       ) : (
-        /* === Swiper Slider === */
         <Swiper
           className="slider-container"
-          modules={[Navigation]} // ✅ only Navigation
+          modules={[Navigation]}
           spaceBetween={20}
           slidesPerView={9}
           navigation={{ clickable: true }}

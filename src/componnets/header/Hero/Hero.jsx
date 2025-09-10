@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "reactstrap";
-
+import headphone from  '../../../assets/images/vibrating-headphone-banner-icon.png';
 function Hero() {
   return (
     <div className="mainBanner">
@@ -11,7 +11,7 @@ function Hero() {
         </div>
         <div>
           <img
-            src={require("../../../assets/images/vibrating-headphone-banner-icon.png")}
+            src={headphone}
             width={212}
             alt="headphones"
           />
